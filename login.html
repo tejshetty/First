@@ -1,0 +1,52 @@
+﻿<style>
+    .form-signin {
+        background: #fff none repeat scroll 0 0;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        margin: 10% 0 0 40%;
+        max-width: 330px;
+        padding: 15px;
+    }
+
+    .login-submitbtn {
+        width: 100%;
+        padding: 9px;
+        border: 0px none;
+    }
+
+    .login-submitbtn-span {
+        position: relative;
+        display: inline-block;
+    }
+
+    .resetbtn {
+        display: block;
+        background: transparent none repeat scroll 0% 0% !important;
+        color: rgb(85, 85, 85) !important;
+        text-shadow: 0px 0px 0px;
+        border: 0px none;
+        text-align: center;
+        width: 100%;
+        font-weight: normal;
+        font-size: 12px;
+        box-shadow: 0px 0px;
+    }
+</style>
+<div class="row">
+    <form class="form-signin" role="form" novalidate angular-validator name="userLoginForm" angular-validator-submit="login()">
+        <h3 class="form-signin-heading">Sign in</h3>
+        <div class="form-group">
+            <label for="inputUsername" class="sr-only">Username</label>
+            <input type="text" id="inputUsername" name="inputUsername" class="form-control" ng-model="user.username" placeholder="Username"
+                   validate-on="blur" required required-message="'Username is required'">
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" id="inputPassword" name="inputPassword" class="form-control" ng-model="user.password" placeholder="Password"
+                   validate-on="blur" required required-message="'Password is required'">
+        </div>
+        <button class="btn btn-lg btn-primarylogin login-submitbtn" type="submit" ng-disabled="IsDisabled"><span class="login-submitbtn-span" ng-show="searchButtonText == 'Loading'"><i class="fa fa-refresh spinning"></i></span> Sign in</button>
+        <button class="btn btn-lg btn-primary resetbtn" type="button" ng-click="resetPassword()">Forgot Password</button>
+    </form>
+</div>
