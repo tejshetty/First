@@ -1,0 +1,243 @@
+﻿<div class="panel-top-menu panel panel-primary">
+    <p ng-show="loadingCircleClub" class="text-center"><img src="/SmartServe/Content/images/Spinner.gif" alt="...........LOADING" class="loading" /></p>
+    <div class="panel-body" ng-hide="loadingCircleClub">
+        <div ng-show="IsCustomerSelected">
+            <div class="text-center text-danger col-md-offset-1 col-md-10" ng-if="UserId == 0">
+                <b>This user do not have a Cricut.com account (they previously might have checked out as a Guest). Please ask the user to create an account in Cricut.com before adding any entitlements to this account.</b>
+            </div>
+            <p ng-show="IsMagentoInfoLoading" class="text-center"><img src="/SmartServe/Content/images/Spinner.gif" alt="...........LOADING" class="loading" /></p>
+            <table>
+                <tr>
+                    <td class="col-md-6 align-top">
+                        <table class="customer-table">
+                            <tr>
+                                <td class="panel-background width2">
+                                    <i class="fa fa-user fa-2x" aria-hidden="true"></i>
+                                </td>
+                                <td class="panel-background width6">
+                                    Name
+                                </td>
+                                <td class="panel-background width20">
+                                    <strong class="text-label">{{CustomerName}} <span ng-if="!CustomerName">NA</span> </strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="panel-background width2">
+                                    <i class="fa fa-envelope fa-2x" aria-hidden="true"></i>
+                                </td>
+                                <td class="panel-background width6">
+                                    Email
+                                </td>
+                                <td class="panel-background width20">
+                                    <strong class="text-label">{{Email}} <span ng-if="!Email">NA</span> </strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="panel-background width2">
+                                    <i class="fa fa-phone-square fa-2x" aria-hidden="true"></i>
+                                </td>
+                                <td class="panel-background width8">
+                                    Phone
+                                </td>
+                                <td class="panel-background width20">
+                                    <strong class="text-label">{{Phone.replace('null','NA')}}<span ng-if="!Phone">NA</span> </strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="panel-background width2">
+                                    <i class="fa fa-address-card fa-2x" aria-hidden="true"></i>
+                                </td>
+                                <td class="panel-background width8">
+                                    Country
+                                </td>
+                                <td class="panel-background width20">
+                                    <strong class="text-label">{{Country}}<span ng-if="!Country">NA</span> </strong>
+                                </td>
+                            </tr>
+                            <tr>
+                            <tr>
+                                <td class="panel-background width4">
+                                    <i class="fa fa-credit-card fa-2x" aria-hidden="true"></i>
+                                </td>
+                                <td class="panel-background width6">
+                                    Store Credit Balance
+                                </td>
+                                <td class="panel-background width9">
+                                    <span ng-show="searchButtonText == 'loadingCreditBalance'"><i class="fa fa-refresh spinning"></i></span>
+                                    <strong class="text-label"><a href="" ng-click="StoreCreditTransaction()">{{storeCreditBalance | number:2}}</a></strong>
+                                    <div class="pull-right">
+                                        <buton class="btn btn-primary btn-xs " ng-disabled="isDisabledStoreCreditBalance || searchButtonText || magentoId == 0 || !IsValidCountry" ng-click="addStoreCreditBalance(element)" tooltip="{{toolTipText}}"><i class="fa fa-plus"></i></buton>
+                                        <boton class="btn btn-primary btn-xs"><i class="fa fa-clock-o" ng-click="StoreCreditTransaction()"></i></boton>&nbsp;&nbsp;
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="panel-background width2">
+                                    <i class="fa fa-address-card fa-2x" aria-hidden="true"></i>
+                                </td>
+                                <td class="panel-background width40">Default Billing Address</td>
+                                <td class="panel-background">
+                                    <strong class="text-label">{{defaultBillingAddress}}<span ng-if="!defaultBillingAddress">NA</span></strong>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                    <td class="col-md-6 align-top">
+                        <table class="customer-table">
+                            <tr>
+                                <td class="panel-background width2">
+                                    <i class="fa fa-users fa-2x" aria-hidden="true"></i>
+                                </td>
+                                <td class="panel-background width6">
+                                    Group
+                                </td>
+                                <td class="panel-background width20">
+                                    <strong class="text-label">{{groupName}}<span ng-if="!groupName">NA</span></strong>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="panel-background width2">
+                                    <i class="fa fa-sign-in fa-2x" aria-hidden="true"></i>
+                                </td>
+                                <td class="panel-background width6">
+                                    Last Login
+                                </td>
+                                <td class="panel-background width20">
+                                    <strong class="text-label">{{LoginTime | date:'dd/MM/yyyy'}} <span ng-if="!LoginTime">NA</span> </strong>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="panel-background width2">
+                                    <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
+                                </td>
+                                <td class="panel-background width20">
+                                    Total Orders
+                                </td>
+                                <td class="panel-background width20">
+                                    <strong class="text-label">{{ordersCount}}</strong>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="panel-background width2">
+                                    <i class="fa fa-dollar fa-2x" aria-hidden="true"></i>
+                                </td>
+                                <td class="panel-background width6">
+                                    Lifetime Sales
+                                </td>
+                                <td class="panel-background width20">
+                                    <strong class="text-label">{{lifetimeSales}}</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="panel-background width2">
+                                    <i class="fa fa-cc-stripe fa-2x" aria-hidden="true"></i>
+                                </td>
+                                <td class="panel-background width6">
+                                    Subscription Card
+                                </td>
+                                <td class="panel-background width20">
+                                    <strong class="text-label">{{subscriptionCard}} <span ng-if="!subscriptionCard">NA</span> </strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="panel-background width2">
+                                    <i class="fa fa-address-card fa-2x" aria-hidden="true"></i>
+                                </td>
+                                <td class="panel-background width40">Default Shipping Address</td>
+                                <td class="panel-background">
+                                    <strong class="text-label">{{defaultShippingAddress}}<span ng-if="!defaultShippingAddress">NA</span></strong>
+                                </td>
+                            </tr>
+                            <tr ng-hide="true">
+                               
+                                <td class="panel-background width2">
+                                    <i class="fa fa-bell-slash fa-2x" aria-hidden="true"></i>
+                                </td>
+                                <td class="panel-background">Marketing Emails</td>
+                                <td rowspan="3" class="panel-background">
+                                    <strong><a href="" ng-click="unsubscribeNewsLetter()"><span class="text-label">Unsubscribe</span></a></strong>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="col-md-6">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="sendmail-panel padleft">
+                                        
+                                        
+                                    </div>
+                                    <div class="reset-password-panel">
+                                        <div class="sendmail-panel">
+                                            <button class="btn btn-primary" ng-click="ClearSessions()">
+                                                <span ng-show="searchText == 'Loading'"><i class="fa fa-refresh spinning"></i></span>
+                                                Force Logout
+                                            </button>
+                                            <button class="btn btn-primary" ng-click="ResetPassword()" ng-disabled="IsDisabled">
+                                                <span ng-show="searchButtonText == 'Loading'"><i class="fa fa-refresh spinning"></i></span>
+                                                Reset Password
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            Customer Notes
+                                            <div class="pull-right">
+                                                <button class="btn btn-xs btn-success" ng-show="isEditable" ng-click="EditNotes()">Edit </button>
+                                                <button class="btn btn-xs btn-success" ng-show="!isEditable" ng-click="UpdateNotes()">Update </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <textarea rows="5" cols="35" ng-model="selectedCustomer.custnotes" ng-disabled="isEditable"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <div class="panel-body">
+                <div ng-show="PasswordResetted" class="text-center text-danger"><strong>The password has been reset to cricut123.</strong></div>
+                <div ng-show="PasswordLinkSent" class="text-center text-danger"><strong>The password reset link has been sent to the customer.</strong></div>
+            </div>
+        </div>
+        <div class="text-center text-danger" ng-show="!IsCustomerSelected">
+            <strong>Please search and select a customer to proceed further.</strong>
+        </div>
+        <div ng-show="magentoId == 0" class="text-center text-danger">
+            <strong> Magento customer not found in Shop. Failed to load Store credit, Billing and shipping Addresses, Group, Total Orders and Lifetime Sales data.</strong>
+        </div>
+    </div>
+</div>
+<script>
+    function checkDec(e) {
+        var keyCode = (e.which) ? e.which : e.keyCode;
+        if ((keyCode >= 48 && keyCode <= 57) || (keyCode == 8 || (keyCode == 45)))
+            return true;
+        else if (keyCode == 46) {
+            var curVal = document.activeElement.value;
+            if (curVal != null && curVal.trim().indexOf('.') == -1)
+                return true;
+            else
+                return false;
+        }
+        else
+            return false;
+    }
+</script>

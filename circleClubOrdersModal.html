@@ -1,0 +1,115 @@
+﻿<div class="container">
+    <div id="addRefundModal" data-backdrop="false" class="topmargin1point5">
+        <div class="panel panel-primary">
+            <div class="panel-heading clearfix">
+                <h4 class="panel-title pull-left">Circle Orders</h4>
+                <button type="button" class="close" ng-click="CancelButton()">&times;</button>
+            </div>
+            <p ng-show="loadRefundDetails" class="text-center"><img src="/SmartServe/Content/images/Spinner.gif" class="loading" /></p>
+
+            <div class="panel-body" ng-show="CircleClubOrders.data.length">
+                <div class="col-md-12">
+                    <div class="col-md-1">
+                        <label class="control-label">Show </label>
+                    </div>
+                    <div class="col-md-1">
+                        <select class="form-control" ng-init="circlePageSize=10" ng-model="circlePageSize" ng-change="ChangeCircleClubPageSize(circlePageSize)">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="All">All</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 pull-right bottom1" ng-show="CircleClubOrders.data.length">
+                        <input type="text" ng-model="searchCircleClub" ng-change="cirlceClubSearch(this)" placeholder="Search CircleClub Information" class="form-control" />
+                    </div>
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                <a href="" class="cricut-sort-header" ng-click="sortData('orderID');">
+                                    Order #<span ng-show="orderByField == 'orderID'"><span ng-show="!reverseSort"><i class="fa fa-sort-asc cricut-sort-icon"></i></span><span ng-show="reverseSort"><i class="fa fa-sort-desc cricut-sort-icon"></i></span></span>
+                                </a>
+                            </th>
+                            <th>
+                                <a href="" class="cricut-sort-header" ng-click="sortData('orderDate');">
+                                    Order Date<span ng-show="orderByField == 'orderDate'"><span ng-show="!reverseSort"><i class="fa fa-sort-asc cricut-sort-icon"></i></span><span ng-show="reverseSort"><i class="fa fa-sort-desc cricut-sort-icon"></i></span></span>
+                                </a>
+                            </th>
+                            <th>
+                                <a href="" class="cricut-sort-header" ng-click="sortData('productID');">
+                                    Product<span ng-show="orderByField == 'productID'"><span ng-show="!reverseSort"><i class="fa fa-sort-asc cricut-sort-icon"></i></span><span ng-show="reverseSort"><i class="fa fa-sort-desc cricut-sort-icon"></i></span></span>
+                                </a>
+                            </th>
+                            <th>
+                                <a href="" class="cricut-sort-header" ng-click="sortData('clubStartDate');">
+                                    Start Date<span ng-show="orderByField == 'clubStartDate'"><span ng-show="!reverseSort"><i class="fa fa-sort-asc cricut-sort-icon"></i></span><span ng-show="reverseSort"><i class="fa fa-sort-desc cricut-sort-icon"></i></span></span>
+                                </a>
+                            </th>
+                            <th>
+                                <a href="" class="cricut-sort-header" ng-click="sortData('clubEndDate');">
+                                    Expire On<span ng-show="orderByField == 'clubEndDate'"><span ng-show="!reverseSort"><i class="fa fa-sort-asc cricut-sort-icon"></i></span><span ng-show="reverseSort"><i class="fa fa-sort-desc cricut-sort-icon"></i></span></span>
+                                </a>
+                            </th>
+                            <th>
+                                <a href="" class="cricut-sort-header" ng-click="sortData('orderStatus');">
+                                    Status<span ng-show="orderByField == 'orderStatus'"><span ng-show="!reverseSort"><i class="fa fa-sort-asc cricut-sort-icon"></i></span><span ng-show="reverseSort"><i class="fa fa-sort-desc cricut-sort-icon"></i></span></span>
+                                </a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="element in Circleitems track by $index">
+                            <td><a ng-click="CircleClubOrderId(element.orderID)">{{element.orderID}}</a></td>
+                            <td>{{element.orderDate}}</td>
+                            <td>{{element.productID}}</td>
+                            <td>{{element.clubStartDate}}</td>
+                            <td>{{element.clubEndDate}}</td>
+                            <td>{{element.orderStatusName}}</td>
+                        </tr>
+                        <tr ng-if="Circleitems.length==0">
+                            <td colspan="6" class="text-danger text-center"><strong>No matching records found</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="container">
+                    <tr>
+                        <td ng-if="!Circleitems.length==0">
+                            <strong>Showing {{cirlcePager.startIndex + 1}} to {{cirlcePager.endIndex + 1}} of {{circlePager.totalItems}} records</strong>
+                        </td>
+                        <td ng-if="Circleitems.length==0">
+                            <strong>Showing {{cirlcePager.startIndex}} to {{cirlcePager.endIndex}} of {{circlePager.totalItems}} records</strong>
+                        </td>
+                        <td >
+                            <div class="text-center">
+                                <ul ng-if="cirlcePager.pages.length" class="pagination">
+                                    <li ng-class="{disabled:cirlcePager.currentPage === 1}">
+                                        <a ng-click="circleClubSetPage(1)">First</a>
+                                    </li>
+                                    <li ng-class="{disabled:cirlcePager.currentPage === 1}">
+                                        <a ng-click="circleClubSetPage(cirlcePager.currentPage - 1)">Previous</a>
+                                    </li>
+                                    <li ng-repeat="page in cirlcePager.pages" ng-class="{active:cirlcePager.currentPage === page}">
+                                        <a ng-click="circleClubSetPage(page)">{{page}}</a>
+                                    </li>
+                                    <li ng-class="{disabled:cirlcePager.currentPage === cirlcePager.totalPages}">
+                                        <a ng-click="circleClubSetPage(cirlcePager.currentPage + 1)">Next</a>
+                                    </li>
+                                    <li ng-class="{disabled:cirlcePager.currentPage === cirlcePager.totalPages}">
+                                        <a ng-click="circleClubSetPage(cirlcePager.totalPages)">Last</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-danger" ng-click="CancelButton()">Close</button>
+                </div>
+            </div>
+            <div ng-if="CircleClubOrders.data.length==0" class="text-danger text-center"><strong> No data available.</strong></div>
+            </div>
+</div>
+</div>

@@ -1,0 +1,79 @@
+﻿<div id="myModal" data-backdrop="false" class="topmargin1point5 dialog-margin">
+    <div class="panel panel-primary">
+        <div class="panel-heading clearfix">
+            Add Credit
+            <button type="button" class="close" ng-click="CancelStoreCredits()">&times;</button>
+        </div>
+        <p ng-show="addEntitlementsHideData" class="text-center"><img src="/SmartServe/Content/images/Spinner.gif" alt="LOADING..........." class="width70 height60" /></p>
+        <div class="panel-body" ng-hide="addEntitlementsHideData">
+            <form role="form" novalidate angular-validator name="addCustomerForm" angular-validator-submit="Register()">
+                <div class="clearfix">
+                    <div class="col-xs-12" ng-show="!resource.storeCreditEdit">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <label class="control-label">Current Credit Balance</label>
+                            </div>
+                            <div class="col-xs-6">
+                                <span>{{storeCreditBalance}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12" ng-show="resource.storeCreditEdit">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <label class="control-label">Current Credit Balance</label>
+                            </div>
+                            <div class="col-xs-6">
+                                <span>{{storeCreditBalance}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12" ng-show="resource.storeCreditEdit">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <label class="control-label">Add or Subtract a credit value </label>
+                            </div>
+                            <div class="col-xs-4">
+                                <input type="text" id="txttext" name="updateCredit" class="form-control" maxlength="7" placeholder="eg: 0 or 100 or -100" ng-mouseleave="LimitToStoreCreditNumber(EditedCustomer.updateCredit)" onkeypress="return checkDec(event)" ng-model="EditedCustomer.updateCredit">
+                            </div>
+
+                        </div>
+                        <p ng-show="isLoadingStoreCredit" class="text-center"><img src="/SmartServe/Content/images/Spinner.gif" alt="LOADING..........." class="loading" /></p>
+
+                        <div class="row top-5">
+                            <div class="col-xs-6">
+                                <select class="form-control" id="ddlReason" name="ddlReason" ng-init="reasonData.reasonDesc=0" ng-model="reasonData.reasonDesc" ng-change="GetReasons(reasonData)" validate-on="blur" required required-message="'Reason is Required'">
+                                    <option value="0">--Select--</option>
+                                    <option ng-repeat="reason in storeCreditReason" value="{{reason.reasonDesc}}">{{reason.reasonDesc}}</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-6">
+                                <textarea id="txtcomment" name="comments" rows="2" cols="80" placeholder="Comments for store credit" class="form-control" ng-model="EditedCustomer.comments" />
+                            </div>
+                        </div>
+                        <div class="row top10" ng-show="isFormInvalid">
+                            <div class="text-center text-danger">
+                                <strong>
+                                    Invalid input
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <br /><br />
+            </form>
+            <div class="panel-footer clearfix">
+                <div class="pull-right">
+                    <div ng-show="resource.storeCreditEdit">
+                        <button type="button" class="btn btn-danger" ng-click="CancelStoreCredits()">Close</button>
+                        <button class="btn btn-primarysubmit" id="btnStoreCredit" name="btnStoreCredit" ng-click="UpdateCreditBalance()" ng-disabled="!EditedCustomer.updateCredit">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

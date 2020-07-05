@@ -1,0 +1,31 @@
+﻿<div class="modal-dialog modal-dialog-center pad12">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Unsubscribe Newsletter
+            <button type="button" class="close" ng-click="CancelButton()">&times;</button>
+        </div>
+        <p ng-show="IsUnsubscribing" class="text-center"><img src="/SmartServe/Content/images/Spinner.gif" class="loading" /></p>
+        <div class="panel-body">
+            <div class="row">
+
+                <fieldset class="bottom2" ng-disabled="IsDisabled">
+                    <div class="col-sm-12">
+                        <p>Are you sure you want to unsubscribe Newsletter?</p>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="panel-footer clearfix">
+            <div class="col-md-12">
+                <div class="pull-right">
+                    <fieldset class="bottom2" ng-disabled="IsDisabled">
+                        <button type="button" class="btn btn-danger" ng-click="CancelButton()">Cancel</button>
+                        <button type="submit" class="btn btn-primarysubmit" ng-click="unsubscribeNewsLetter()">Unsubscribe</button>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+
