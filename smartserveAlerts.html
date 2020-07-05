@@ -1,0 +1,105 @@
+﻿<form role="form" novalidate angular-validator name="SmartServeAlerts" angular-validator-submit="Register()">
+    <div class="panel-top-menu panel panel-primary">
+        <div class="panel-body">
+            <p ng-show="loadingSmartServeAlerts" class="text-center"><img src="/SmartServe/Content/images/Spinner.gif" alt="LOADING..........." class="loading" /></p>
+            <div ng-show="!smartserveAlerts.length && !loadingSmartServeAlerts" class="text-center text-danger"><strong> No data available.</strong> </div>
+            <div class="col-md-11 col-xs-11 bottom1" ng-hide="loadingSmartServeAlerts">
+                <div class="row pull-right">
+                    <button class="btn btn-primary" ng-click="AddSmartServeAlerts()">Add Alerts</button>
+                    <button class="btn btn-primary" ng-click="AddWFPoint()">Add WF/Point</button>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" ng-show="smartserveAlerts.length">
+                <div class="col-md-1 col-xs-1">
+                    <label class="control-label">Show</label>
+                </div>
+                <div class="col-md-1 col-xs-2">
+                    <select class="form-control" ng-init="pageSize=10" ng-model="pageSize" ng-change="ChangePageSize(pageSize)">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="All">All</option>
+                    </select>
+                </div>
+                <div class="col-md-3 col-xs-6 pull-right bottom1" ng-show="smartserveAlerts.length">
+                    <input type="text" ng-model="searchSmartServeAlerts" ng-change="search(this)" placeholder="Search Alerts" class="form-control" />
+                </div>
+            </div>
+            <table class="table table-alerts table-striped table-hover" ng-show="smartserveAlerts.length">
+                <thead>
+                    <tr>
+                        <th>
+                            <a href="" class="cricut-sort-header" ng-click="orderByField='date'; reverseSort = !reverseSort">
+                                Date and Time<span ng-show="orderByField == 'date'"><span ng-show="!reverseSort"><i class="fa fa-sort-asc cricut-sort-icon"></i></span><span ng-show="reverseSort"><i class="fa fa-sort-desc cricut-sort-icon"></i></span></span>
+                            </a>
+                        </th>
+                        <th>
+                            <a href="" class="cricut-sort-header" ng-click="orderByField='details'; reverseSort = !reverseSort">
+                                Message<span ng-show="orderByField == 'details'"><span ng-show="!reverseSort"><i class="fa fa-sort-asc cricut-sort-icon"></i></span><span ng-show="reverseSort"><i class="fa fa-sort-desc cricut-sort-icon"></i></span></span>
+                            </a>
+                        </th>
+                        <th>
+                            <a href="" class="cricut-sort-header" ng-click="orderByField='addedBy'; reverseSort = !reverseSort">
+                                Added By<span ng-show="orderByField == 'addedBy'"><span ng-show="!reverseSort"><i class="fa fa-sort-asc cricut-sort-icon"></i></span><span ng-show="reverseSort"><i class="fa fa-sort-desc cricut-sort-icon"></i></span></span>
+                            </a>
+                        </th>
+                        <th class="text-center">
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="element in smartserveAlertsItems">
+                        <td>
+                            {{element.date}}
+                        </td>
+                        <td>
+                            {{element.details}}
+                        </td>
+                        <td>
+                            {{element.addedBy}}
+                        </td>
+                        <td >
+                            <button type="button" class="btn btn-xs col-sm-3 col-sm-offset-3 " ng-class="{true: 'btn btn-primary btn-xs ', false: 'btn btn-danger btn-xs '}[element.active]" ng-click="UpdateStatusData(element)">{{element.active&&'Active'||!element.active&&'InActive'}}</button>
+                            <button type="button" class="btn btn-danger btn-xs col-sm-1 col-xs-offset-1" ng-click="DeleteSmartServeAlerts(element)"><i class="glyphicon glyphicon-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr ng-if="smartserveAlertsItems.length==0">
+                        <td colspan="4" class="text-danger text-center"><strong>No matching records found</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="container" ng-show="smartserveAlerts.length">
+                <tr>
+                    <td ng-if="!smartserveAlertsItems.length==0">
+                        <strong>Showing {{pager.startIndex + 1}} to {{pager.endIndex + 1}} of {{pager.totalItems}} records</strong>
+                    </td>
+                    <td ng-if="smartserveAlertsItems.length==0">
+                        <strong>Showing {{pager.startIndex}} to {{pager.endIndex}} of {{pager.totalItems}} records</strong>
+                    </td>
+                    <td>
+                        <div class="text-right">
+                            <ul ng-if="pager.pages.length" class="pagination">
+                                <li ng-class="{disabled:pager.currentPage === 1}">
+                                    <a ng-click="SetPage(1)">First</a>
+                                </li>
+                                <li ng-class="{disabled:pager.currentPage === 1}">
+                                    <a ng-click="SetPage(pager.currentPage - 1)">Previous</a>
+                                </li>
+                                <li ng-repeat="page in pager.pages" ng-class="{active:pager.currentPage === page}">
+                                    <a ng-click="SetPage(page)">{{page}}</a>
+                                </li>
+                                <li ng-class="{disabled:pager.currentPage === pager.totalPages}">
+                                    <a ng-click="SetPage(pager.currentPage + 1)">Next</a>
+                                </li>
+                                <li ng-class="{disabled:pager.currentPage === pager.totalPages}">
+                                    <a ng-click="SetPage(pager.totalPages)">Last</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</form>
