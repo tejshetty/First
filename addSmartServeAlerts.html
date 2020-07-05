@@ -1,0 +1,31 @@
+﻿<div class="modal-dialog modal-dialog-center pad12">
+    <form role="form" novalidate angular-validator name="SmartServeAlerts" angular-validator-submit="register()">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Add SmartServe Alerts
+                <button type="button" class="close" ng-click="CancelButton()">&times;</button>
+            </div>
+            <div class="panel-body">
+                <p ng-show="addSmartServeAlerts" class="text-center"><img src="/SmartServe/Content/images/Spinner.gif" alt="LOADING..........." class="loading" /></p>
+                <div class="form-group" ng-hide="addSmartServeAlerts">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="col-sm-3">
+                                <label class="control-label" id="firstName" for="FirstName">Message <span class="text-danger">*</span> </label>
+                            </div>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="txtdetails" name="txtDetails" ng-model="smartserveAlerts.Details" ng-keyup="$event.keyCode == 13 ? InsertSmartServeAlerts() : null" validate-on="blur" required required-message="'Details is Required'" maxlength="200" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer clearfix">
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-danger" ng-click="CancelButton()">Close</button>
+                        <button type="submit" class="btn btn-primarysubmit" ng-click="InsertSmartServeAlerts()">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
