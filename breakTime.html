@@ -1,0 +1,50 @@
+﻿<!--<html>
+<body>
+    <script type="text/javascript" src='<%:ResolveClientUrl("signalr/hubs")%>'></script>
+    </body>
+
+</html>-->
+<div class="modal-dialog modal-dialog-center pad12">
+    <div class="panel panel-primary">
+        <div align="center" class="panel-heading clearfix">
+            <h1>Break Time</h1>
+        </div>
+        <div>
+                <div class=" col-md-2 pull-right">
+                    <select class="form-control" ng-model="insertData.site" ng-change="onChangeSites(insertData.site)" ng-hide="disableBreaktimeSlot">
+                        <option ng-repeat="site in sites" value="{{site.siteID}}" ng-selected="site.selected" ng-model="insertData.siteSelected">{{site.shortName}} </option>
+                        <option style="display:none" value="">select a type</option>
+                    </select>
+                </div>
+        </div>
+            <p ng-show="dataLoader" class="text-center"><img src="/SmartServe/Content/images/Spinner.gif" class="loading" /></p>
+            <div class="panel-body">
+                <div  class="margintop25" align="center">
+
+                    <fieldset data-ng-repeat="slotName in slotArray">
+                        <div>
+                            <accordion close-others="oneAtATime" class="btime">
+                                <accordion-group heading={{slotName}} is-open="true">
+                                    <fieldset class="breaktime-fieldset" data-ng-repeat="slot in slots">
+                                        <div ng-if="slot.site==slotName&&slot.slotStatus==true">
+                                            <a href="" class="breaktime-fieldset-a">
+                                                <div ng-if="slot.site==slotName&&slot.slotStatus==true" class="{{slot.colourText}}" ng-click="doAction(slot)">
+                                                    <span>{{$index+1}}<br />{{slot.slotText}}<br />{{slot.slotSeconds}}</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </fieldset>
+                                </accordion-group>
+                            </accordion>
+                        </div>
+                    </fieldset>
+
+                </div>
+            </div>
+            <div class="panel-footer clearfix">
+                <div class="pull-right">
+                    <button type="button" class="btn btn-danger" ng-click="CloseModalWindow();" ng-disabled="btnDisableButton">CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
