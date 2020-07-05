@@ -1,0 +1,52 @@
+﻿<div class="modal-dialog modal-dialog-center pad12">
+    <div class="panel panel-primary">
+        <div class="panel-heading clearfix">
+            <div class="panel-title pull-left">Add WF/Point</div>
+            <button type="button" class="close" ng-click="CloseModal()">&times;</button>
+        </div>
+        <div class="panel-body">
+            <p ng-show="dataLoader" class="text-center"><img src="/SmartServe/Content/images/Spinner.gif" class="loading" /></p>
+            <form role="form" novalidate angular-validator name="SmartServeAlerts" angular-validator-submit="register()">
+                <div class="row">
+                    <div class="form-group">
+                        <table class="table table-alerts table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+
+                                    </th>
+                                    <th>
+                                        WF
+                                    </th>
+                                    <th>
+                                        Point
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="element in smartserveNotifications track by $index">
+                                    <td>
+                                        {{element.site}}
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="txtWF" name="txtWF" ng-model="element.workForce" maxlength="30" />
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="txtPoint" name="txtPoint" ng-model="element.point" maxlength="30" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+            <div class="panel-footer clearfix top10">
+                <div class="pull-right">
+                    <button type="button" class="btn btn-danger" ng-click="ClearSearch()">Clear</button>
+                    <button type="submit" class="btn btn-primarysubmit" ng-click="SaveData()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
